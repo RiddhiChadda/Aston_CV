@@ -5,9 +5,14 @@ function registerCV($conn, $name, $email, $password, $keyprog, $profile, $educat
     $sql = "INSERT INTO cvs (name, email, password, keyprogramming, profile, education, URLlinks)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = mysqli_prepare($conn, $sql);
+    $stmt = $conn->prepare($sql);
 
-    mysqli_stmt_bind_param($stmt, "sssssss",
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param(
+        "sssssss",
         $name,
         $email,
         $password,
@@ -17,7 +22,11 @@ function registerCV($conn, $name, $email, $password, $keyprog, $profile, $educat
         $links
     );
 
-    return mysqli_stmt_execute($stmt);
+    if (!$stmt->execute()) {
+        die("Execute failed: " . $stmt->error);
+    }
+
+    return true;
 }
 
 ?>
