@@ -47,15 +47,17 @@ function loginCV($conn, $email, $password)
 
     $result = $stmt->get_result();
 
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-
-        if ($user["password"] == $password) {
-            return $user;
-        }
+    if ($result->num_rows == 0) {
+        return "no_user";
     }
 
-    return false;
+    $user = $result->fetch_assoc();
+
+    if ($user["password"] == $password) {
+        return $user;
+    } else {
+        return "wrong_password";
+    }
 }
 
 

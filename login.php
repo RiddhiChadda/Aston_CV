@@ -3,36 +3,48 @@ session_start();
 
 include 'includes/config.php';
 include 'includes/functions.php';
-include 'includes/header.php';
 
 $message = "";
+$showRegisterLink = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
 
-    $user = loginCV($conn, $email, $password);
+    $result = loginCV($conn, $email, $password);
 
-    if ($user) {
-        $_SESSION["user_id"] = $user["id"];
-        $_SESSION["user_name"] = $user["name"];
-        $_SESSION["user_email"] = $user["email"];
+    if (is_array($result)) {
+        $_SESSION["user_id"] = $result["id"];
+        $_SESSION["user_name"] = $result["name"];
+        $_SESSION["user_email"] = $result["email"];
 
         header("Location: index.php");
         exit();
-    } else {
-        $message = "Invalid email or password.";
+    } elseif ($result == "no_user") {
+        $message = "Email not registered.";
+        $showRegisterLink = true;
+    } elseif ($result == "wrong_password") {
+        $message = "Incorrect password.";
     }
 }
+
+include 'includes/header.php';
 ?>
 
 <h2>Login</h2>
 
 <?php if ($message != ""): ?>
-    <p style="color: red;"><?php echo $message; ?></p>
+    <p style="color: red; font-weight: bold;"><?php echo $message; ?></p>
+
+    <?php if ($showRegisterLink): ?>
+        <p>
+            Not registered?
+            <a href="register.php">Create an account here</a>
+        </p>
+    <?php endif; ?>
 <?php endif; ?>
 
-<form method="POST" action="">
+<form method="POST" action="login.php">
     <label for="email">Email</label><br>
     <input type="email" name="email" id="email" required><br><br>
 
