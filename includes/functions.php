@@ -29,7 +29,6 @@ function registerCV($conn, $name, $email, $password, $keyprog, $profile, $educat
     return true;
 }
 
-
 function loginCV($conn, $email, $password)
 {
     $sql = "SELECT * FROM cvs WHERE email = ?";
@@ -58,5 +57,6 @@ function loginCV($conn, $email, $password)
 
     return false;
 }
+
 
 ?>
