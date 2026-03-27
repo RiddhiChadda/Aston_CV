@@ -23,6 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $profile = trim($_POST["profile"]);
     $education = trim($_POST["education"]);
     $URLlinks = trim($_POST["URLlinks"]);
+    $phone = trim($_POST["phone"]);
+    $location = trim($_POST["location"]);
+    $skills = trim($_POST["skills"]);
+    $experience = trim($_POST["experience"]);
+    $projects = trim($_POST["projects"]);
 
     if ($name == "" || $email == "") {
         $message = "Name and email are required.";
@@ -37,7 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $keyprogramming,
             $profile,
             $education,
-            $URLlinks
+            $URLlinks,
+            $phone,
+            $location,
+            $skills,
+            $experience,
+            $projects
         );
 
         if ($result === true) {
@@ -74,22 +84,37 @@ include 'includes/header.php';
 
 <form method="POST" action="edit_cv.php">
     <label for="name">Name</label><br>
-    <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($cv['name']); ?>" required><br><br>
+    <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($cv['name'] ?? ''); ?>" required><br><br>
 
     <label for="email">Email</label><br>
-    <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($cv['email']); ?>" required><br><br>
+    <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($cv['email'] ?? ''); ?>" required><br><br>
+
+    <label for="phone">Phone</label><br>
+    <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($cv['phone'] ?? ''); ?>"><br><br>
+
+    <label for="location">Location</label><br>
+    <input type="text" name="location" id="location" value="<?php echo htmlspecialchars($cv['location'] ?? ''); ?>"><br><br>
 
     <label for="keyprogramming">Key Programming Language</label><br>
-    <input type="text" name="keyprogramming" id="keyprogramming" value="<?php echo htmlspecialchars($cv['keyprogramming']); ?>"><br><br>
+    <input type="text" name="keyprogramming" id="keyprogramming" value="<?php echo htmlspecialchars($cv['keyprogramming'] ?? ''); ?>"><br><br>
+
+    <label for="skills">Skills</label><br>
+    <textarea name="skills" id="skills"><?php echo htmlspecialchars($cv['skills'] ?? ''); ?></textarea><br><br>
 
     <label for="profile">Profile</label><br>
-    <textarea name="profile" id="profile"><?php echo htmlspecialchars($cv['profile']); ?></textarea><br><br>
+    <textarea name="profile" id="profile"><?php echo htmlspecialchars($cv['profile'] ?? ''); ?></textarea><br><br>
 
     <label for="education">Education</label><br>
-    <textarea name="education" id="education"><?php echo htmlspecialchars($cv['education']); ?></textarea><br><br>
+    <textarea name="education" id="education"><?php echo htmlspecialchars($cv['education'] ?? ''); ?></textarea><br><br>
+
+    <label for="experience">Experience</label><br>
+    <textarea name="experience" id="experience"><?php echo htmlspecialchars($cv['experience'] ?? ''); ?></textarea><br><br>
+
+    <label for="projects">Projects</label><br>
+    <textarea name="projects" id="projects"><?php echo htmlspecialchars($cv['projects'] ?? ''); ?></textarea><br><br>
 
     <label for="URLlinks">URL Links</label><br>
-    <input type="text" name="URLlinks" id="URLlinks" value="<?php echo htmlspecialchars($cv['URLlinks']); ?>"><br><br>
+    <input type="text" name="URLlinks" id="URLlinks" value="<?php echo htmlspecialchars($cv['URLlinks'] ?? ''); ?>"><br><br>
 
     <button type="submit">Update My CV</button>
 </form>

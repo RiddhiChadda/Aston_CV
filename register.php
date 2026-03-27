@@ -18,9 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]);
     $keyprogramming = trim($_POST["keyprogramming"]);
-    $profile = trim($_POST["profile"]);
-    $education = trim($_POST["education"]);
-    $URLlinks = trim($_POST["URLlinks"]);
 
     if ($name == "" || $email == "" || $password == "") {
         $message = "Name, email, and password are required.";
@@ -34,10 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $name,
             $email,
             $password,
-            $keyprogramming,
-            $profile,
-            $education,
-            $URLlinks
+            $keyprogramming
         );
 
         if ($result === true) {
@@ -57,7 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php if ($success): ?>
     <div class="success-box">
         <h3>Registration Successful</h3>
-        <p>Your CV has been added successfully.</p>
+        <p>Your account has been created successfully.</p>
+        <p>Please log in and go to <strong>Edit My CV</strong> to complete your full profile.</p>
         <a href="login.php" class="primary-link-button">Go to Login</a>
     </div>
 <?php else: ?>
@@ -77,18 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="password" id="password" required><br><br>
 
         <label for="keyprogramming">Key Programming Language</label><br>
-        <input type="text" name="keyprogramming" id="keyprogramming"><br><br>
+        <input type="text" name="keyprogramming" id="keyprogramming" placeholder="Optional at registration"><br><br>
 
-        <label for="profile">Profile</label><br>
-        <textarea name="profile" id="profile"></textarea><br><br>
-
-        <label for="education">Education</label><br>
-        <textarea name="education" id="education"></textarea><br><br>
-
-        <label for="URLlinks">URL Links</label><br>
-        <input type="text" name="URLlinks" id="URLlinks"><br><br>
-
-        <button type="submit">Register CV</button>
+        <button type="submit">Create Account</button>
     </form>
 
 <?php endif; ?>

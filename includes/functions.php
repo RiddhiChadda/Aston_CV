@@ -30,7 +30,7 @@ function emailExists($conn, $email, $excludeId = null)
     return $result->num_rows > 0;
 }
 
-function registerCV($conn, $name, $email, $password, $keyprog, $profile, $education, $links)
+function registerCV($conn, $name, $email, $password, $keyprog)
 {
     if (emailExists($conn, $email)) {
         return "email_exists";
@@ -38,8 +38,8 @@ function registerCV($conn, $name, $email, $password, $keyprog, $profile, $educat
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO cvs (name, email, password, keyprogramming, profile, education, URLlinks)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO cvs (name, email, password, keyprogramming)
+            VALUES (?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
 
@@ -48,14 +48,11 @@ function registerCV($conn, $name, $email, $password, $keyprog, $profile, $educat
     }
 
     $stmt->bind_param(
-        "sssssss",
+        "ssss",
         $name,
         $email,
         $hashedPassword,
-        $keyprog,
-        $profile,
-        $education,
-        $links
+        $keyprog
     );
 
     if (!$stmt->execute()) {
@@ -121,14 +118,37 @@ function getCVById($conn, $id)
     return false;
 }
 
-function updateCV($conn, $id, $name, $email, $keyprog, $profile, $education, $links)
-{
+function updateCV(
+    $conn,
+    $id,
+    $name,
+    $email,
+    $keyprog,
+    $profile,
+    $education,
+    $links,
+    $phone,
+    $location,
+    $skills,
+    $experience,
+    $projects
+) {
     if (emailExists($conn, $email, $id)) {
         return "email_exists";
     }
 
     $sql = "UPDATE cvs
-            SET name = ?, email = ?, keyprogramming = ?, profile = ?, education = ?, URLlinks = ?
+            SET name = ?,
+                email = ?,
+                keyprogramming = ?,
+                profile = ?,
+                education = ?,
+                URLlinks = ?,
+                phone = ?,
+                location = ?,
+                skills = ?,
+                experience = ?,
+                projects = ?
             WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
@@ -138,13 +158,18 @@ function updateCV($conn, $id, $name, $email, $keyprog, $profile, $education, $li
     }
 
     $stmt->bind_param(
-        "ssssssi",
+        "sssssssssssi",
         $name,
         $email,
         $keyprog,
         $profile,
         $education,
         $links,
+        $phone,
+        $location,
+        $skills,
+        $experience,
+        $projects,
         $id
     );
 
