@@ -188,3 +188,15 @@ footer {
     padding: 20px;
     color: #666666;
 }
+
+.cv-detail-box {
+    background-color: #faf9ff;
+    border: 1px solid #ddd6ff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.cv-detail-box p {
+    margin-bottom: 12px;
+}
