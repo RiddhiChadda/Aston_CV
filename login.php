@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (isset($_SESSION["user_id"])) {
+    header("Location: index.php");
+    exit();
+}
+
 include 'includes/config.php';
 include 'includes/functions.php';
 
@@ -34,7 +39,7 @@ include 'includes/header.php';
 <h2>Login</h2>
 
 <?php if ($message != ""): ?>
-    <p style="color: red; font-weight: bold;"><?php echo $message; ?></p>
+    <p class="error-text"><?php echo $message; ?></p>
 
     <?php if ($showRegisterLink): ?>
         <p>

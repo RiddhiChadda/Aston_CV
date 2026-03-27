@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (isset($_SESSION["user_id"])) {
+    header("Location: index.php");
+    exit();
+}
+
 include 'includes/config.php';
 include 'includes/functions.php';
 include 'includes/header.php';
@@ -38,39 +45,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Register</h2>
 
 <?php if ($success): ?>
-
-    <div style="text-align: center;">
-        <h3 style="color: green;">Registration Successful</h3>
+    <div class="success-box">
+        <h3>Registration Successful</h3>
         <p>Your CV has been added successfully.</p>
-
-        <a href="login.php" style="
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #4b2aad;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        ">
-            Go to Login
-        </a>
+        <a href="login.php" class="primary-link-button">Go to Login</a>
     </div>
-
 <?php else: ?>
 
     <?php if ($message != ""): ?>
-        <p style="color: red;"><?php echo $message; ?></p>
+        <p class="error-text"><?php echo $message; ?></p>
     <?php endif; ?>
 
     <form method="POST" action="">
         <label for="name">Name</label><br>
-        <input type="text" name="name" id="name" required ><br><br>
+        <input type="text" name="name" id="name" required><br><br>
 
         <label for="email">Email</label><br>
-        <input type="email" name="email" id="email" required ><br><br>
+        <input type="email" name="email" id="email" required><br><br>
 
         <label for="password">Password</label><br>
-        <input type="password" name="password" id="password" required ><br><br>
+        <input type="password" name="password" id="password" required><br><br>
 
         <label for="keyprogramming">Key Programming Language</label><br>
         <input type="text" name="keyprogramming" id="keyprogramming"><br><br>

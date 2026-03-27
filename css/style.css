@@ -9,22 +9,44 @@ body {
 header {
     background-color: #4b2aad;
     color: white;
-    padding: 20px;
+    padding: 20px 30px;
+}
+
+.header-top {
     text-align: center;
 }
 
 header h1 {
     margin: 0;
+    color: white;
 }
 
-nav {
-    margin-top: 12px;
+.welcome-text {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #f3ecff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.nav-main,
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 12px;
     font-weight: bold;
 }
 
@@ -32,8 +54,13 @@ nav a:hover {
     text-decoration: underline;
 }
 
+.logout-link {
+    padding-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+}
+
 main {
-    max-width: 900px;
+    max-width: 950px;
     margin: 30px auto;
     background-color: white;
     padding: 30px;
@@ -56,6 +83,104 @@ p {
 
 ul {
     line-height: 1.8;
+}
+
+input,
+textarea,
+button {
+    font: inherit;
+}
+
+input,
+textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+}
+
+button {
+    background-color: #4b2aad;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3c2190;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+table th,
+table td {
+    border: 1px solid #dddddd;
+    padding: 14px;
+    text-align: left;
+    vertical-align: top;
+}
+
+table th {
+    background-color: #f1edff;
+    color: #2f1c73;
+}
+
+table tr:nth-child(even) {
+    background-color: #faf9ff;
+}
+
+table a {
+    color: #4b2aad;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+table a:hover {
+    text-decoration: underline;
+}
+
+.success-box {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #cfe8d5;
+    background-color: #f3fbf5;
+    border-radius: 8px;
+}
+
+.success-box h3 {
+    color: #1f7a35;
+    margin-top: 0;
+}
+
+.error-text {
+    color: #c62828;
+    font-weight: bold;
+}
+
+.primary-link-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4b2aad;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.primary-link-button:hover {
+    background-color: #3c2190;
 }
 
 footer {

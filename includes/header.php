@@ -14,24 +14,35 @@ if (session_status() == PHP_SESSION_NONE) {
 </head>
 <body>
     <header>
-        <h1>AstonCV</h1>
+        <div class="header-top">
+            <h1>AstonCV</h1>
 
-        <?php if (isset($_SESSION["user_name"])): ?>
-            <p>Welcome, <?php echo htmlspecialchars($_SESSION["user_name"]); ?></p>
-        <?php endif; ?>
-
-        <nav>
-            <a href="index.php">Home</a>
-            <a href="cvs.php">View CVs</a>
-            <a href="search.php">Search</a>
-
-            <?php if (isset($_SESSION["user_id"])): ?>
-                <a href="edit_cv.php">Edit My CV</a>
-                <a href="logout.php">Logout</a>
-            <?php else: ?>
-                <a href="register.php">Register</a>
-                <a href="login.php">Login</a>
+            <?php if (isset($_SESSION["user_name"])): ?>
+                <p class="welcome-text">
+                    Welcome, <?php echo htmlspecialchars($_SESSION["user_name"]); ?>
+                </p>
             <?php endif; ?>
+        </div>
+
+        <nav class="navbar">
+            <div class="nav-main">
+                <a href="index.php">Home</a>
+
+                <?php if (isset($_SESSION["user_id"])): ?>
+                    <a href="cvs.php">View CVs</a>
+                    <a href="search.php">Search</a>
+                    <a href="edit_cv.php">Edit My CV</a>
+                <?php endif; ?>
+            </div>
+
+            <div class="nav-auth">
+                <?php if (isset($_SESSION["user_id"])): ?>
+                    <a href="logout.php" class="logout-link">Logout</a>
+                <?php else: ?>
+                    <a href="login.php">Login</a>
+                    <a href="register.php">Register</a>
+                <?php endif; ?>
+            </div>
         </nav>
     </header>
     <main>
