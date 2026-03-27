@@ -64,13 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form method="POST" action="">
         <label for="name">Name</label><br>
-        <input type="text" name="name" id="name"><br><br>
+        <input type="text" name="name" id="name" required ><br><br>
 
         <label for="email">Email</label><br>
-        <input type="email" name="email" id="email"><br><br>
+        <input type="email" name="email" id="email" required ><br><br>
 
         <label for="password">Password</label><br>
-        <input type="text" name="password" id="password"><br><br>
+        <input type="password" name="password" id="password" required ><br><br>
 
         <label for="keyprogramming">Key Programming Language</label><br>
         <input type="text" name="keyprogramming" id="keyprogramming"><br><br>
