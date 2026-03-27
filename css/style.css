@@ -200,3 +200,8 @@ footer {
 .cv-detail-box p {
     margin-bottom: 12px;
 }
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}

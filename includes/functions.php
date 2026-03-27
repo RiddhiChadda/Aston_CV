@@ -60,5 +60,59 @@ function loginCV($conn, $email, $password)
     }
 }
 
+function getCVById($conn, $id)
+{
+    $sql = "SELECT * FROM cvs WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("i", $id);
+
+    if (!$stmt->execute()) {
+        die("Execute failed: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        return $result->fetch_assoc();
+    }
+
+    return false;
+}
+
+function updateCV($conn, $id, $name, $email, $keyprog, $profile, $education, $links)
+{
+    $sql = "UPDATE cvs
+            SET name = ?, email = ?, keyprogramming = ?, profile = ?, education = ?, URLlinks = ?
+            WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param(
+        "ssssssi",
+        $name,
+        $email,
+        $keyprog,
+        $profile,
+        $education,
+        $links,
+        $id
+    );
+
+    if (!$stmt->execute()) {
+        die("Execute failed: " . $stmt->error);
+    }
+
+    return true;
+}
 
 ?>
