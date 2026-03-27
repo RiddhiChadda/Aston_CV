@@ -24,6 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($name == "" || $email == "" || $password == "") {
         $message = "Name, email, and password are required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = "Please enter a valid email address.";
+    } elseif (strlen($password) < 6) {
+        $message = "Password must be at least 6 characters long.";
     } else {
         $result = registerCV(
             $conn,
@@ -36,9 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $URLlinks
         );
 
-        if ($result) {
+        if ($result === true) {
             $message = "Registration successful.";
             $success = true;
+        } elseif ($result === "email_exists") {
+            $message = "This email is already registered.";
         } else {
             $message = "Something went wrong. Please try again.";
         }

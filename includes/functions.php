@@ -1,7 +1,41 @@
 <?php
 
+function emailExists($conn, $email, $excludeId = null)
+{
+    if ($excludeId === null) {
+        $sql = "SELECT id FROM cvs WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("s", $email);
+    } else {
+        $sql = "SELECT id FROM cvs WHERE email = ? AND id != ?";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("si", $email, $excludeId);
+    }
+
+    if (!$stmt->execute()) {
+        die("Execute failed: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
+    return $result->num_rows > 0;
+}
+
 function registerCV($conn, $name, $email, $password, $keyprog, $profile, $education, $links)
 {
+    if (emailExists($conn, $email)) {
+        return "email_exists";
+    }
+
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO cvs (name, email, password, keyprogramming, profile, education, URLlinks)
@@ -89,6 +123,10 @@ function getCVById($conn, $id)
 
 function updateCV($conn, $id, $name, $email, $keyprog, $profile, $education, $links)
 {
+    if (emailExists($conn, $email, $id)) {
+        return "email_exists";
+    }
+
     $sql = "UPDATE cvs
             SET name = ?, email = ?, keyprogramming = ?, profile = ?, education = ?, URLlinks = ?
             WHERE id = ?";

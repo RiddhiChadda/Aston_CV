@@ -24,27 +24,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $education = trim($_POST["education"]);
     $URLlinks = trim($_POST["URLlinks"]);
 
-    $result = updateCV(
-        $conn,
-        $userId,
-        $name,
-        $email,
-        $keyprogramming,
-        $profile,
-        $education,
-        $URLlinks
-    );
-
-    if ($result) {
-        $_SESSION["user_name"] = $name;
-        $_SESSION["user_email"] = $email;
-
-        $message = "Your CV has been updated successfully.";
-        $success = true;
-
-        $cv = getCVById($conn, $userId);
+    if ($name == "" || $email == "") {
+        $message = "Name and email are required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = "Please enter a valid email address.";
     } else {
-        $message = "Something went wrong. Please try again.";
+        $result = updateCV(
+            $conn,
+            $userId,
+            $name,
+            $email,
+            $keyprogramming,
+            $profile,
+            $education,
+            $URLlinks
+        );
+
+        if ($result === true) {
+            $_SESSION["user_name"] = $name;
+            $_SESSION["user_email"] = $email;
+
+            $message = "Your CV has been updated successfully.";
+            $success = true;
+
+            $cv = getCVById($conn, $userId);
+        } elseif ($result === "email_exists") {
+            $message = "That email is already being used by another account.";
+        } else {
+            $message = "Something went wrong. Please try again.";
+        }
     }
 }
 
