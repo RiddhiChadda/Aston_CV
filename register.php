@@ -14,30 +14,34 @@ $message = "";
 $success = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $keyprogramming = $_POST["keyprogramming"];
-    $profile = $_POST["profile"];
-    $education = $_POST["education"];
-    $URLlinks = $_POST["URLlinks"];
+    $name = trim($_POST["name"]);
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
+    $keyprogramming = trim($_POST["keyprogramming"]);
+    $profile = trim($_POST["profile"]);
+    $education = trim($_POST["education"]);
+    $URLlinks = trim($_POST["URLlinks"]);
 
-    $result = registerCV(
-        $conn,
-        $name,
-        $email,
-        $password,
-        $keyprogramming,
-        $profile,
-        $education,
-        $URLlinks
-    );
-
-    if ($result) {
-        $message = "Registration successful.";
-        $success = true;
+    if ($name == "" || $email == "" || $password == "") {
+        $message = "Name, email, and password are required.";
     } else {
-        $message = "Something went wrong. Please try again.";
+        $result = registerCV(
+            $conn,
+            $name,
+            $email,
+            $password,
+            $keyprogramming,
+            $profile,
+            $education,
+            $URLlinks
+        );
+
+        if ($result) {
+            $message = "Registration successful.";
+            $success = true;
+        } else {
+            $message = "Something went wrong. Please try again.";
+        }
     }
 }
 ?>
@@ -53,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php else: ?>
 
     <?php if ($message != ""): ?>
-        <p class="error-text"><?php echo $message; ?></p>
+        <p class="error-text"><?php echo htmlspecialchars($message); ?></p>
     <?php endif; ?>
 
     <form method="POST" action="">

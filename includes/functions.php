@@ -2,6 +2,8 @@
 
 function registerCV($conn, $name, $email, $password, $keyprog, $profile, $education, $links)
 {
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
     $sql = "INSERT INTO cvs (name, email, password, keyprogramming, profile, education, URLlinks)
             VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -15,7 +17,7 @@ function registerCV($conn, $name, $email, $password, $keyprog, $profile, $educat
         "sssssss",
         $name,
         $email,
-        $password,
+        $hashedPassword,
         $keyprog,
         $profile,
         $education,
@@ -53,7 +55,7 @@ function loginCV($conn, $email, $password)
 
     $user = $result->fetch_assoc();
 
-    if ($user["password"] == $password) {
+    if (password_verify($password, $user["password"])) {
         return $user;
     } else {
         return "wrong_password";
